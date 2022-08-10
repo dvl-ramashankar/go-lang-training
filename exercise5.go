@@ -20,14 +20,13 @@ func run() error {
 func Sqrt(x float64) (float64, error) {
 	if x > 0 {
 		return math.Sqrt(x), nil
-	} else {
-		return x, run()
 	}
-
-	return 0, nil
+	return x, run()
 }
 
 func main() {
 	fmt.Println(Sqrt(2))
 	fmt.Println(Sqrt(-2))
+	fmt.Println(Sqrt(25))
+	fmt.Println(Sqrt(-25))
 }

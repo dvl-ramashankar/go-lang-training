@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+
+	l "demo/exportPackage"
+	d "demo/packageTest"
 )
 
 type rectangle interface {
@@ -62,4 +65,7 @@ func main() {
 	do(21)
 	do("hello")
 	do(true)
+	l.M1()
+	l.M2()
+	fmt.Println("The addition in different package : ", d.M3(5, 5))
 }
