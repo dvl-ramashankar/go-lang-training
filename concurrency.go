@@ -56,18 +56,64 @@ func fibonacciUsingChannelsCall() {
 	for i := range c {
 		fmt.Print(" ", i)
 	}
+	fmt.Println()
 }
 
+func portal1(channel1 chan string) {
+	channel1 <- "Welcome to channel 1"
+}
+
+func portal2(channel2 chan string) {
+	time.Sleep(time.Second)
+	channel2 <- "Welcome to channel 2"
+}
+
+func selectTest() {
+	R1 := make(chan string)
+	R2 := make(chan string)
+
+	go portal1(R1)
+	go portal2(R2)
+
+	// the choice of selectionis random
+	select {
+	case op1 := <-R1:
+		fmt.Println(op1)
+	case op2 := <-R2:
+		fmt.Println(op2)
+	}
+}
+func defaultSelection() {
+	tick := time.Tick(100 * time.Millisecond)
+	boom := time.After(500 * time.Millisecond)
+	for {
+		select {
+		case <-tick:
+			fmt.Print("tick@")
+		case <-boom:
+			fmt.Print("BOOM!")
+			return
+		default:
+			fmt.Print("*")
+			time.Sleep(50 * time.Millisecond)
+		}
+	}
+}
 func main() {
 	go hello()
 	fmt.Println("main function")
 	go testThread("Hi")
 	testThread("All!!")
-	time.Sleep(time.Second)
+	time.Sleep(1 * time.Millisecond)
 	fmt.Print("Channels =  ")
 	channelTest()
 	fmt.Print("Buffered Channels =  ")
 	bufferedChannelTest()
 	fmt.Print("Range And Close =  ")
 	fibonacciUsingChannelsCall()
+	fmt.Print("Select = ")
+	selectTest()
+	fmt.Println("Default Selection =")
+	defaultSelection()
+	fmt.Println()
 }
